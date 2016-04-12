@@ -9,6 +9,8 @@ public class Arena {
 
     private String name;
 
+    private GameState state;
+
     private List<String> ingame;
 
     private int maxPlayers;
@@ -17,7 +19,9 @@ public class Arena {
         this.name = name;
         this.maxPlayers = maxPlayers;
 
-        this.timer = new Timer();
+        this.state = GameState.LOBBY;
+
+        this.timer = new Timer(this);
         this.ingame = new ArrayList<>();
     }
 
@@ -35,6 +39,14 @@ public class Arena {
 
     public int getMaxPlayers() {
         return maxPlayers;
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
     }
 
 }
