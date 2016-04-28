@@ -25,11 +25,8 @@ public class SignChange implements Listener {
                 e.setLine(1, ChatColor.GREEN + arena.getState().toString());
                 e.setLine(2, String.valueOf(ChatColor.YELLOW) + arena.getIngame().size() + "/" + arena.getMaxPlayers());
 
-                List<String> signsList = new ArrayList<>(Minigame.getInstance().getConfig().getStringList("arenas." + arena.getName() + ".signs"));
-
-                signsList.add(Minigame.getInstance().serializeLocation(e.getBlock().getLocation()));
-
-                Minigame.getInstance().getConfig().set("arenas." + arena.getName() + ".signs", signsList);
+                Minigame.getInstance().getConfig().set("arenas." + arena.getName() + ".sign",
+                        Minigame.getInstance().serializeLocation(e.getBlock().getLocation()));
 
             }
 

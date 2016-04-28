@@ -3,6 +3,7 @@ package pw.betanyan.minigame.game;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Sign;
+import pw.betanyan.minigame.Minigame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class Arena {
 
         this.timer = new Timer(this);
         this.ingame = new ArrayList<>();
+
+        Minigame.getInstance().getArenaManager().addArena(this);
     }
 
     public Timer getTimer() {

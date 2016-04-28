@@ -30,7 +30,7 @@ public class PlayerInteract implements Listener {
 
                 for (String arena : config.getConfigurationSection("arenas").getKeys(false)) {
 
-                    if (config.getStringList("arenas." + arena + ".signs").contains(plugin.serializeLocation(e.getClickedBlock().getLocation()))) {
+                    if (config.getString("arenas." + arena + ".sign").equals(plugin.serializeLocation(e.getClickedBlock().getLocation()))) {
 
                         Arena arenaObj = plugin.getArenaManager().getArenaByName(arena);
 

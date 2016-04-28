@@ -1,10 +1,13 @@
 package pw.betanyan.minigame;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import pw.betanyan.minigame.game.Arena;
 import pw.betanyan.minigame.game.ArenaManager;
 import pw.betanyan.minigame.listeners.PlayerInteract;
 import pw.betanyan.minigame.listeners.SignChange;
@@ -67,6 +70,19 @@ public class Minigame extends JavaPlugin {
 
     }
 
+    private void loadArenas() {
+
+        for (String arena : config.getConfigurationSection("arenas").getKeys(false)) {
+
+            new Arena(arena, config.getInt("arenas." + arena + ".maxplayers"),
+                    config.getString("sign") == "NOEXIST" ? null :
+                            (Sign) unserializeLocation(config.getString("sign")).getWorld()
+                                    .getBlockAt(unserializeLocation(config.getString("sign"))).getState());
+
+        }
+
+    }
+
     private void registerListeners(Listener... listeners) {
 
         Arrays.stream(listeners).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
@@ -78,7 +94,23 @@ public class Minigame extends JavaPlugin {
     }
 
     public String serializeLocation(Location loc) {
-        return loc.getWorld() + "=" + loc.getX() + "=" + loc.getY() + "=" + loc.getZ() + "=" + loc.getPitch() + "=" + loc.getYaw();
+        return loc.getWorld().getName() + "=" + loc.getX() + "=" + loc.getY() + "=" + loc.getZ() + "=" + loc.getPitch() + "=" + loc.getYaw();
+    }
+
+    public Location unserializeLocation(String loc) {
+        String[] split = loc.split("=");
+        Location location = new Location(getServer().getWorld(split[0]),
+                Double.parseDouble(split[1]), Double.parseDouble(split[2]),
+                Double.parseDouble(split[3]));
+
+        location.setPitch(Float.parseFloat(split[4]));
+        location.setYaw(Float.parseFloat(split[5]));
+
+        return location;
+    }
+
+    public String chatColor(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     @Override
@@ -89,4 +121,6 @@ public class Minigame extends JavaPlugin {
     public static Minigame getInstance() {
         return instance;
     }
+
+
 }
