@@ -24,7 +24,7 @@ public class PlayerInteract implements Listener {
 
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-            if (e.getClickedBlock().getType() == Material.SIGN_POST || e.getClickedBlock().getType() == Material.SIGN) {
+            if (e.getClickedBlock().getType() == Material.SIGN_POST || e.getClickedBlock().getType() == Material.WALL_SIGN) {
 
                 FileConfiguration config = plugin.getConfig();
 
@@ -37,6 +37,8 @@ public class PlayerInteract implements Listener {
                         arenaObj.getIngame().add(e.getPlayer().getName());
                         arenaObj.broadcast("&a" + e.getPlayer().getName() + " has joined the game! " + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
                         arenaObj.getSign().setLine(2, String.valueOf(ChatColor.YELLOW) + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
+
+                        arenaObj.getSign().update(true);
 
                     }
 

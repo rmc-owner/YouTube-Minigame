@@ -78,7 +78,7 @@ public class Minigame extends JavaPlugin {
     }
 
     public String serializeLocation(Location loc) {
-        return loc.getX() + "=" + loc.getY() + "=" + loc.getZ() + "=" + loc.getPitch() + "=" + loc.getYaw();
+        return loc.getWorld() + "=" + loc.getX() + "=" + loc.getY() + "=" + loc.getZ() + "=" + loc.getPitch() + "=" + loc.getYaw();
     }
 
     @Override
