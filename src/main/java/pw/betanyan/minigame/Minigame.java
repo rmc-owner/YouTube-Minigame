@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Minigame extends JavaPlugin {
 
@@ -68,16 +69,20 @@ public class Minigame extends JavaPlugin {
             e.printStackTrace();
         }
 
+        loadArenas();
+
     }
 
     private void loadArenas() {
 
         for (String arena : config.getConfigurationSection("arenas").getKeys(false)) {
 
-            new Arena(arena, config.getInt("arenas." + arena + ".maxplayers"),
-                    config.getString("sign") == "NOEXIST" ? null :
-                            (Sign) unserializeLocation(config.getString("sign")).getWorld()
-                                    .getBlockAt(unserializeLocation(config.getString("sign"))).getState());
+            new Arena(arena, unserializeLocation(config.getString("arenas." + arena + ".lobbyspawn")),
+                    listStrToLocs(config.getStringList("arenas." + arena + ".spawns")),
+                    config.getInt("arenas." + arena + ".maxplayers"),
+                        config.getString("arenas." + arena + ".sign").equals("NOEXIST") ? null :
+                            (Sign) unserializeLocation(config.getString("arenas." + arena + ".sign")).getWorld()
+                                    .getBlockAt(unserializeLocation(config.getString("arenas." + arena + ".sign"))).getState());
 
         }
 
@@ -98,6 +103,11 @@ public class Minigame extends JavaPlugin {
     }
 
     public Location unserializeLocation(String loc) {
+
+        if (loc.equals("NOEXIST")) {
+            return null;
+        }
+
         String[] split = loc.split("=");
         Location location = new Location(getServer().getWorld(split[0]),
                 Double.parseDouble(split[1]), Double.parseDouble(split[2]),
@@ -109,6 +119,16 @@ public class Minigame extends JavaPlugin {
         return location;
     }
 
+    public List<Location> listStrToLocs(List<String> locs) {
+
+        List<Location> toReturn = new ArrayList<>();
+
+        locs.stream().forEach(loc -> toReturn.add(unserializeLocation(loc)));
+
+        return toReturn;
+
+    }
+
     public String chatColor(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
@@ -116,6 +136,15 @@ public class Minigame extends JavaPlugin {
     @Override
     public FileConfiguration getConfig() {
         return config;
+    }
+
+    @Override
+    public void saveConfig() {
+        try {
+            config.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Minigame getInstance() {

@@ -1,6 +1,7 @@
 package pw.betanyan.minigame.listeners;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
@@ -27,6 +28,10 @@ public class SignChange implements Listener {
 
                 Minigame.getInstance().getConfig().set("arenas." + arena.getName() + ".sign",
                         Minigame.getInstance().serializeLocation(e.getBlock().getLocation()));
+
+                arena.setSign((Sign) e.getBlock().getState());
+
+                Minigame.getInstance().saveConfig();
 
             }
 

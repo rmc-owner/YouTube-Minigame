@@ -34,11 +34,15 @@ public class PlayerInteract implements Listener {
 
                         Arena arenaObj = plugin.getArenaManager().getArenaByName(arena);
 
-                        arenaObj.getIngame().add(e.getPlayer().getName());
-                        arenaObj.broadcast("&a" + e.getPlayer().getName() + " has joined the game! " + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
-                        arenaObj.getSign().setLine(2, String.valueOf(ChatColor.YELLOW) + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
+                        if (arenaObj.getSign() != null) {
 
-                        arenaObj.getSign().update(true);
+                            arenaObj.getIngame().add(e.getPlayer().getName());
+                            arenaObj.broadcast("&a" + e.getPlayer().getName() + " has joined the game! " + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
+                            arenaObj.getSign().setLine(2, String.valueOf(ChatColor.YELLOW) + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
+
+                            arenaObj.getSign().update(true);
+
+                        }
 
                     }
 
