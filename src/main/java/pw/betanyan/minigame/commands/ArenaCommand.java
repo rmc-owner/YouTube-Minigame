@@ -86,14 +86,18 @@ public class ArenaCommand implements CommandExecutor {
 
                         if (arenaObj != null) {
 
-                            arenaObj.addSpawn(p.getLocation());
-                            p.sendMessage(plugin.chatColor("&aSuccessfully added spawn #" + arenaObj.getSpawns().size() + " to " + arenaName));
+                            if (arenaObj.getSpawns().size() < arenaObj.getMaxPlayers()) {
+                                arenaObj.addSpawn(p.getLocation());
+                                p.sendMessage(plugin.chatColor("&aSuccessfully added spawn #" + arenaObj.getSpawns().size() + " to " + arenaName));
 
-                            List<String> currentSpawns = plugin.getConfig().getStringList("arenas." + arenaName + ".spawns");
-                            currentSpawns.add(plugin.serializeLocation(p.getLocation()));
+                                List<String> currentSpawns = plugin.getConfig().getStringList("arenas." + arenaName + ".spawns");
+                                currentSpawns.add(plugin.serializeLocation(p.getLocation()));
 
-                            plugin.getConfig().set("arenas." + arenaName + ".spawns", currentSpawns);
-                            plugin.saveConfig();
+                                plugin.getConfig().set("arenas." + arenaName + ".spawns", currentSpawns);
+                                plugin.saveConfig();
+                            } else {
+                                p.sendMessage(plugin.chatColor("&cYou already have enough spawns!"));
+                            }
 
                         } else {
 
@@ -112,7 +116,8 @@ public class ArenaCommand implements CommandExecutor {
                             arenaObj.setLobbySpawn(p.getLocation());
                             p.sendMessage(plugin.chatColor("&aSuccessfully set lobby spawn for " + arenaName));
 
-                            plugin.getConfig().set("arenas." + arenaName + ".lobbyspawn", p.getLocation());
+                            plugin.getConfig().set("arenas." + arenaName + ".lobbyspawn",
+                                    plugin.serializeLocation(p.getLocation()));
                             plugin.saveConfig();
 
                         } else {
@@ -139,7 +144,7 @@ public class ArenaCommand implements CommandExecutor {
 
     public String getHelpMessage() {
 
-        StringBuilder builder = new StringBuilder("&b&m---------------- &r&aArena Commands&r &b&m----------------\n");
+        StringBuilder builder = new StringBuilder("&b&m----------------&r &aArena Commands&r &b&m----------------\n");
 
         builder.append("&b/arena create <name> - &aCreate an arena.\n");
         builder.append("&b/arena remove <name> - &aRemove an arena.\n");

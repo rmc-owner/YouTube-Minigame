@@ -43,6 +43,7 @@ public class Timer extends BukkitRunnable {
                         lobbyTimeLeft--;
                     } else {
                         arena.setState(GameState.INGAME);
+                        arena.updateSign();
                         //TODO: Send players to spawn, start game, etc
                     }
                     break;
@@ -51,6 +52,7 @@ public class Timer extends BukkitRunnable {
                         gameTimeLeft--;
                     } else {
                         arena.setState(GameState.END);
+                        arena.updateSign();
                         //TODO: Send players to spawn, start game, etc
                     }
                     break;
@@ -58,6 +60,7 @@ public class Timer extends BukkitRunnable {
                     if (endTimeLeft != 0) {
                         endTimeLeft--;
                     } else {
+                        arena.updateSign();
                         //TODO: End/Restart Game
                     }
                     break;

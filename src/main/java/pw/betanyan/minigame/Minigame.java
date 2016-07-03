@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import pw.betanyan.minigame.commands.ArenaCommand;
 import pw.betanyan.minigame.game.Arena;
 import pw.betanyan.minigame.game.ArenaManager;
 import pw.betanyan.minigame.listeners.PlayerInteract;
@@ -30,13 +31,15 @@ public class Minigame extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        instance = this;
+
         arenaManager = new ArenaManager();
 
         loadConfig();
 
         registerListeners(new PlayerInteract(this), new SignChange());
 
-        instance = this;
+        registerCommands();
 
     }
 
@@ -75,17 +78,25 @@ public class Minigame extends JavaPlugin {
 
     private void loadArenas() {
 
-        for (String arena : config.getConfigurationSection("arenas").getKeys(false)) {
+        if (!config.getString("arenas").equals("")) {
 
-            new Arena(arena, unserializeLocation(config.getString("arenas." + arena + ".lobbyspawn")),
-                    listStrToLocs(config.getStringList("arenas." + arena + ".spawns")),
-                    config.getInt("arenas." + arena + ".maxplayers"),
+            for (String arena : config.getConfigurationSection("arenas").getKeys(false)) {
+
+                new Arena(arena, unserializeLocation(config.getString("arenas." + arena + ".lobbyspawn")),
+                        listStrToLocs(config.getStringList("arenas." + arena + ".spawns")),
+                        config.getInt("arenas." + arena + ".maxplayers"),
                         config.getString("arenas." + arena + ".sign").equals("NOEXIST") ? null :
-                            (Sign) unserializeLocation(config.getString("arenas." + arena + ".sign")).getWorld()
-                                    .getBlockAt(unserializeLocation(config.getString("arenas." + arena + ".sign"))).getState());
+                                (Sign) unserializeLocation(config.getString("arenas." + arena + ".sign")).getWorld()
+                                        .getBlockAt(unserializeLocation(config.getString("arenas." + arena + ".sign"))).getState());
+
+            }
 
         }
 
+    }
+
+    private void registerCommands() {
+        getCommand("arena").setExecutor(new ArenaCommand());
     }
 
     private void registerListeners(Listener... listeners) {

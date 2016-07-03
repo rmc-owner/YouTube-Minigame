@@ -36,11 +36,7 @@ public class PlayerInteract implements Listener {
 
                         if (arenaObj.getSign() != null) {
 
-                            arenaObj.getIngame().add(e.getPlayer().getName());
-                            arenaObj.broadcast("&a" + e.getPlayer().getName() + " has joined the game! " + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
-                            arenaObj.getSign().setLine(2, String.valueOf(ChatColor.YELLOW) + arenaObj.getIngame().size() + "/" + arenaObj.getMaxPlayers());
-
-                            arenaObj.getSign().update(true);
+                            arenaObj.joinPlayer(e.getPlayer());
 
                         }
 
