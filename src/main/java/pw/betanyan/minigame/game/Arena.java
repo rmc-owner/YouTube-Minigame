@@ -105,7 +105,7 @@ public class Arena {
                     Team name = board.registerNewTeam("name");
 
                     name.addEntry(ChatColor.RED.toString());
-                    name.setPrefix(ChatColor.GREEN + "Name: " + ChatColor.YELLOW);
+                    name.setPrefix(ChatColor.GREEN + "Name: ");
                     name.setSuffix(player.getName());
 
                     obj.getScore(ChatColor.RED.toString()).setScore(2);
@@ -117,11 +117,11 @@ public class Arena {
 
                     Team kills = board.registerNewTeam("kills");
 
-                    kills.addEntry(ChatColor.RED.toString());
-                    kills.setPrefix(ChatColor.GREEN + "Kills: " + ChatColor.YELLOW);
+                    kills.addEntry(ChatColor.GREEN.toString());
+                    kills.setPrefix(ChatColor.GREEN + "Kills: ");
                     kills.setSuffix(this.kills.get(player.getName()).toString());
 
-                    obj.getScore(ChatColor.RED.toString()).setScore(0);
+                    obj.getScore(ChatColor.GREEN.toString()).setScore(0);
 
 
                 } else {
