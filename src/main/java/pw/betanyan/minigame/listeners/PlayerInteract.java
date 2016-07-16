@@ -24,7 +24,7 @@ public class PlayerInteract implements Listener {
 
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-            if (e.getClickedBlock().getType() == Material.SIGN_POST || e.getClickedBlock().getType() == Material.WALL_SIGN) {
+            if (e.getClickedBlock().getState() instanceof Sign) {
 
                 FileConfiguration config = plugin.getConfig();
 
