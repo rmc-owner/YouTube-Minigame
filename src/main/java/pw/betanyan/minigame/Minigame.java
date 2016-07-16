@@ -120,14 +120,10 @@ public class Minigame extends JavaPlugin {
         }
 
         String[] split = loc.split("=");
-        Location location = new Location(getServer().getWorld(split[0]),
+        return new Location(getServer().getWorld(split[0]),
                 Double.parseDouble(split[1]), Double.parseDouble(split[2]),
-                Double.parseDouble(split[3]));
-
-        location.setPitch(Float.parseFloat(split[4]));
-        location.setYaw(Float.parseFloat(split[5]));
-
-        return location;
+                Double.parseDouble(split[3]), Float.parseFloat(split[4]),
+                Float.parseFloat(split[5]));
     }
 
     public List<Location> listStrToLocs(List<String> locs) {
