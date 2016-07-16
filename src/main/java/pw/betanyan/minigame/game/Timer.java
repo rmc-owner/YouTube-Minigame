@@ -46,6 +46,7 @@ public class Timer extends BukkitRunnable {
                         arena.updateSign();
                         //TODO: Send players to spawn, start game, etc
                     }
+                    arena.updateScoreboards();
                     break;
                 case INGAME:
                     if (gameTimeLeft != 0) {
@@ -55,6 +56,7 @@ public class Timer extends BukkitRunnable {
                         arena.updateSign();
                         //TODO: Send players to spawn, start game, etc
                     }
+                    arena.updateScoreboards();
                     break;
                 case END:
                     if (endTimeLeft != 0) {
@@ -63,6 +65,7 @@ public class Timer extends BukkitRunnable {
                         arena.updateSign();
                         //TODO: End/Restart Game
                     }
+                    arena.updateScoreboards();
                     break;
                 default:
                     break;
@@ -70,6 +73,57 @@ public class Timer extends BukkitRunnable {
             }
 
         }
+
+    }
+
+    public int getMinutes() {
+
+        switch (arena.getState()) {
+
+            case LOBBY:
+                return lobbyTimeLeft / 60;
+            case INGAME:
+                return gameTimeLeft / 60;
+            case END:
+                return endTimeLeft / 60;
+            default:
+                return 0;
+
+        }
+
+    }
+
+    public int getSeconds() {
+
+        switch (arena.getState()) {
+
+            case LOBBY:
+                return lobbyTimeLeft % 60;
+            case INGAME:
+                return gameTimeLeft % 60;
+            case END:
+                return endTimeLeft % 60;
+            default:
+                return 0;
+
+        }
+
+    }
+
+    public String formatTime() {
+
+        int iminutes = getMinutes(), iseconds = getSeconds();
+        String minutes = String.valueOf(getMinutes()), seconds = String.valueOf(getSeconds());
+
+        if (iminutes < 10) {
+            minutes = "0".concat(minutes);
+        }
+
+        if (iseconds < 10) {
+            seconds = "0".concat(seconds);
+        }
+
+        return minutes + ":" + seconds;
 
     }
 

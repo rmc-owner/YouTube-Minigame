@@ -5,10 +5,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 import pw.betanyan.minigame.Minigame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Arena {
 
@@ -21,6 +27,9 @@ public class Arena {
     private List<String> ingame;
 
     private List<Location> spawns;
+
+    private Map<String, Integer> kills;
+    private Map<String, Scoreboard> scoreboards;
 
     private int maxPlayers;
 
@@ -37,6 +46,9 @@ public class Arena {
         this.lobbySpawn = lobbySpawn;
 
         this.state = GameState.LOBBY;
+
+        this.kills = new HashMap<>();
+        this.scoreboards = new HashMap<>();
 
         this.sign = sign;
 
@@ -79,7 +91,38 @@ public class Arena {
 
                     }
 
+                    kills.put(player.getName(), 0);
+
                     updateSign();
+
+                    Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+
+                    Objective obj = board.registerNewObjective("stats", "dummy");
+                    obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+                    obj.setDisplayName(ChatColor.AQUA + ChatColor.BOLD.toString() + "Minigame "
+                            + ChatColor.YELLOW + getTimer().formatTime());
+
+                    Team name = board.registerNewTeam("name");
+
+                    name.addEntry(ChatColor.RED.toString());
+                    name.setPrefix(ChatColor.GREEN + "Name: " + ChatColor.YELLOW);
+                    name.setSuffix(player.getName());
+
+                    obj.getScore(ChatColor.RED.toString()).setScore(2);
+
+                    Team blank1 = board.registerNewTeam("blank1");
+                    blank1.addEntry(ChatColor.BLUE.toString());
+
+                    obj.getScore(ChatColor.BLUE.toString()).setScore(1);
+
+                    Team kills = board.registerNewTeam("kills");
+
+                    kills.addEntry(ChatColor.RED.toString());
+                    kills.setPrefix(ChatColor.GREEN + "Kills: " + ChatColor.YELLOW);
+                    kills.setSuffix(this.kills.get(player.getName()).toString());
+
+                    obj.getScore(ChatColor.RED.toString()).setScore(0);
+
 
                 } else {
 
@@ -154,4 +197,20 @@ public class Arena {
     public Sign getSign() {
         return sign;
     }
+
+    public void updateScoreboards() {
+
+        for (String user : scoreboards.keySet()) {
+
+            Scoreboard board = scoreboards.get(user);
+
+            board.getObjective(DisplaySlot.SIDEBAR).setDisplayName(ChatColor.AQUA + ChatColor.BOLD.toString() + "Minigame "
+                    + ChatColor.YELLOW + getTimer().formatTime());
+
+            board.getTeam("kills").setSuffix(kills.get(user).toString());
+
+        }
+
+    }
+
 }
