@@ -10,7 +10,7 @@ import pw.betanyan.minigame.game.Arena;
 public class PlayerFood implements Listener {
 
     @EventHandler
-    public void onFood(FoodLevelChangeEvent e) {
+    public void onFood(FoodLevelChangeEvent event) {
 
         Player player = (Player) event.getEntity();
         Arena arena = Minigame.getInstance().getArenaManager().getArenaByPlayer(player.getName());

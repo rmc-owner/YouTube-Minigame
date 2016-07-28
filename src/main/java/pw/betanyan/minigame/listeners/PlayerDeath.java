@@ -10,7 +10,7 @@ import pw.betanyan.minigame.game.Arena;
 public class PlayerDeath implements Listener {
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent e) {
+    public void onDeath(PlayerDeathEvent event) {
 
         Player player = event.getEntity();
         Player killer = player.getKiller();
@@ -22,7 +22,7 @@ public class PlayerDeath implements Listener {
                 arena.broadcast("&e" + player.getName() + "&a was slain by &e" + killer.getName());
                 arena.getKills().put(killer.getName(),
                         arena.getKills().get(killer.getName()) + 1);
-            } else{
+            } else {
                 arena.broadcast("&e" + player.getName() + "&a has died.");
             }
 

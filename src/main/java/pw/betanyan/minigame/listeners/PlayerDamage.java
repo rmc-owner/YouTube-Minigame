@@ -11,9 +11,9 @@ import pw.betanyan.minigame.game.GameState;
 public class PlayerDamage implements Listener {
 
     @EventHandler
-    public void onDamage(EntityDamageEvent e) {
+    public void onDamage(EntityDamageEvent event) {
 
-        if(event.getEntity() instanceof Player) {
+        if (event.getEntity() instanceof Player) {
 
             Player player = (Player) event.getEntity();
             Arena arena = Minigame.getInstance().getArenaManager().getArenaByPlayer(player.getName());
