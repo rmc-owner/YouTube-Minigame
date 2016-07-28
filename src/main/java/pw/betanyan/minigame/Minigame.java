@@ -10,8 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pw.betanyan.minigame.commands.ArenaCommand;
 import pw.betanyan.minigame.game.Arena;
 import pw.betanyan.minigame.game.ArenaManager;
-import pw.betanyan.minigame.listeners.PlayerInteract;
-import pw.betanyan.minigame.listeners.SignChange;
+import pw.betanyan.minigame.listeners.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class Minigame extends JavaPlugin {
 
         loadConfig();
 
-        registerListeners(new PlayerInteract(this), new SignChange());
+        registerListeners(new PlayerInteract(this), new SignChange(), new PlayerDeath(), new PlayerDamage(), new PlayerFood());
 
         registerCommands();
 

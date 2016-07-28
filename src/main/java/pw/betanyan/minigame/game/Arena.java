@@ -213,4 +213,7 @@ public class Arena {
 
     }
 
+    public Map<String, Integer> getKills() {
+        return kills;
+    }
 }
