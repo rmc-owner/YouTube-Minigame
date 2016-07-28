@@ -23,7 +23,7 @@ public class Timer extends BukkitRunnable {
 
         this.paused = true;
 
-        this.runTaskTimer(Minigame.getPlugin(Minigame.class), 0, 20);
+        this.runTaskTimer(minigame.getPlugin(minigame.class), 0, 20);
 
     }
 

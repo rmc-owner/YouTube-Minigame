@@ -12,10 +12,10 @@ public class PlayerFood implements Listener {
     @EventHandler
     public void onFood(FoodLevelChangeEvent e) {
 
-        Player player = (Player) e.getEntity();
+        Player player = (Player) event.getEntity();
         Arena arena = Minigame.getInstance().getArenaManager().getArenaByPlayer(player.getName());
         if (arena != null) {
-            e.setCancelled(true);
+            event.setCancelled(true);
         }
 
     }

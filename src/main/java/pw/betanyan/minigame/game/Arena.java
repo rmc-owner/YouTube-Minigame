@@ -1,7 +1,7 @@
 package pw.betanyan.minigame.game;
 
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -71,7 +71,7 @@ public class Arena {
         getSign().update(true);
 
     }
-    
+
     public void joinPlayer(Player player) {
 
         if (getIngame().size() < maxPlayers) {
@@ -141,7 +141,7 @@ public class Arena {
             player.sendMessage(ChatColor.RED + "There is already enough people!");
 
         }
-        
+
     }
 
     public String getName() {

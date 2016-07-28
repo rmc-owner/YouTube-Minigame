@@ -12,7 +12,7 @@ public class PlayerDeath implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
 
-        Player player = e.getEntity();
+        Player player = event.getEntity();
         Player killer = player.getKiller();
 
         Arena arena = Minigame.getInstance().getArenaManager().getArenaByPlayer(player.getName());

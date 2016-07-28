@@ -13,13 +13,13 @@ public class PlayerDamage implements Listener {
     @EventHandler
     public void onDamage(EntityDamageEvent e) {
 
-        if(e.getEntity() instanceof Player) {
+        if(event.getEntity() instanceof Player) {
 
-            Player player = (Player) e.getEntity();
+            Player player = (Player) event.getEntity();
             Arena arena = Minigame.getInstance().getArenaManager().getArenaByPlayer(player.getName());
             if (arena != null) {
                 if (arena.getState() != GameState.INGAME) {
-                    e.setCancelled(true);
+                    event.setCancelled(true);
                 }
             }
 
